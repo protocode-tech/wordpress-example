@@ -1,0 +1,43 @@
+# Made with Protocode
+# Generated on 2025-03-07 at 09:15:22
+
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .protocode/Dockerfile
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - '80'
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST:-database}
+      DATABASE_NAME: ${DATABASE_NAME:-database}
+      DATABASE_USER: ${DATABASE_USER:-user}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-password}
+      VIRTUAL_HOST: ${VIRTUAL_HOST:-app.docker.local}
+    depends_on:
+      - database
+    labels:
+      protocode.alias.php: docker-compose run --rm app php
+      protocode.alias.wp: docker-compose run --rm app wp
+  database:
+    image: mariadb:10.3
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-database}
+      MYSQL_USER: ${MYSQL_USER:-user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+    volumes:
+      - ./.protocode-runtime/volumes/database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '80'
+    environment:
+      PMA_HOST: ${PMA_HOST:-database}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      VIRTUAL_HOST: phpmyadmin.docker.local
+    depends_on:
+      - database

@@ -1,0 +1,41 @@
+
+{
+    "languages": [
+        {
+            "name": "PHP",
+            "version": "latest stable version"
+        }
+    ],
+    "dependency_managers": [],
+    "ports": [],
+    "databases": [
+        {
+            "name": "mariadb",
+            "version": "10.3"
+        }
+    ],
+    "runtime_environments": [
+        {
+            "name": "PHP runtime",
+            "paths": [
+                "php"
+            ]
+        }
+    ],
+    "frameworks": [
+        {
+            "name": "WordPress",
+            "version": "Not specified in the provided files"
+        }
+    ],
+    "frameworks_cli": [
+        {
+            "path": "wp",
+            "preinstalled": false,
+            "required": true,
+            "install_script": "composer global require wp-cli/wp-cli"
+        }
+    ],
+    "setup_script": "",
+    "startup_script": "php -S localhost:8000 index.php"
+}
